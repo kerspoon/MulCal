@@ -108,7 +108,7 @@ public class TextInput {
     	        ti.process(str);
     	    }
     	} catch (IOException e) {
-	        System.out.println("Error reasing from stream");
+	        System.out.println("Error reading from stream");
     	}
         System.out.println("Done.");
 	}
