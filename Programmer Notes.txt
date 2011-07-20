@@ -1,0 +1,20 @@
+
+
+ - To add a unary prefix function (e.g sin X):
+ 	 1. function names must be symbols or ascii lower-case
+	 1. Add to 'mulCal.equationParser.PostfixEval.EvaluateFunction'
+	 
+ - To add a binary infix operator (e.g X + Y):
+ 	 1. operator names must be symbols or ascii lower-case
+	 1. if needed change toTokens and readFunction in 'mulCal.equationParser.Tokenize'
+	 1. Add to 'mulCal.equationParser.PostfixEval.EvaluateOperator'
+	 1. Add to 'mulCal.equationParser.InfixToRPN.Operators'
+	 
+ - To add a new special form (e.g. [currency 100 GBP USD])
+ 	 1. special forms must eval to a number
+ 	 1. Add to 'mulCal.equationParser.EvalSpecial.evalSpecialForm'
+ 	 
+ - To add a new constant (e.g. PI)
+ 	 1. constant names must be all ascii upper-case
+ 	 1. Add to 'mulCal.equationParser.EvalSpecial.constants'
+ 	
