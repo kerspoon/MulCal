@@ -29,7 +29,7 @@ public class EvalSpecial {
 				if (constants.containsKey(tok.text)) {
 					result.add(new Token(TokenType.NUMBER, constants.get(tok.text).toString()));
 				} else {
-					result.add(new Token(TokenType.NUMBER, history.Get(tok.text).result.toString()));
+					result.add(new Token(TokenType.NUMBER, history.get(tok.text).result.toString()));
 				}
 			} else if (tok.type == TokenType.SPECIAL) {
 				result.add(evalSpecialForm(tok, tokens, history, constants));

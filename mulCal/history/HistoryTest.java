@@ -17,7 +17,7 @@ public class HistoryTest {
 	public void testBasic() throws Exception {
 		History history = new History();
 		history.Add("1+1", new BigDecimal("2"));
-		HistoryItem first = history.Get("A");
+		HistoryItem first = history.get("A");
 		assertEquals(first.id, "A");
 		assertEquals(first.equation, "1+1");
 		assertEquals(first.result, new BigDecimal("2"));
@@ -28,7 +28,7 @@ public class HistoryTest {
 	public void testAll() throws Exception {
 		History history = new History();
 		history.Add("1+1", new BigDecimal("2"));
-		HistoryItem first = history.Get("A");
+		HistoryItem first = history.get("A");
 		assertEquals(first.id, "A");
 	}
 
@@ -48,7 +48,7 @@ public class HistoryTest {
 		History newHistory = new History();
 		newHistory.Load("temp.tmp");
 
-		HistoryItem first = newHistory.Get("A");
+		HistoryItem first = newHistory.get("A");
 		assertEquals(first.id, "A");
 		assertEquals(first.equation, "1+1");
 		assertEquals(first.result, new BigDecimal("2"));

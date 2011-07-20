@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.TreeMap;
 
 import lib.au.com.bytecode.opencsv.CSVReader;
@@ -115,6 +116,7 @@ public class History {
 	public void Clear() {
 		this.items.clear();
 	}
+
 	
 	public void SetComment(String id, String comment) throws KeyException {
 		if (this.items.containsKey(id))	{
@@ -137,15 +139,18 @@ public class History {
 			throw new IllegalArgumentException("error with row insertion");
 		}
 	}
+
+	public Collection<HistoryItem> getAll() {
+		return this.items.values();
+	}
 	
-	public HistoryItem Get(String id) throws KeyException {
+	public HistoryItem get(String id) throws KeyException {
 		if (this.items.containsKey(id))	{
 			return this.items.get(id);
 		} else {
 			throw new KeyException(id);
 		}
 	}
-	
 
 	public boolean ContainsID(String id) {
 		return this.items.containsKey(id);

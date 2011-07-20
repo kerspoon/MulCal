@@ -7,11 +7,13 @@ import static mulCal.equationParser.InfixToRPN.toRPN;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.List;
 
 import mulCal.equationParser.EvalSpecial;
 import mulCal.equationParser.Tokenize.Token;
 import mulCal.history.History;
+import mulCal.history.History.HistoryItem;
 import mulCal.util.KeyException;
 
 public class Main {
@@ -100,5 +102,13 @@ public class Main {
 	public void years(String val) {
 		// TODO not implemented
 		throw new RuntimeException();
+	}
+
+	public Collection<HistoryItem> getHistory() {
+		return history.getAll();
+	}
+
+	public HistoryItem getHistoryItem(String val) throws KeyException {
+		return history.get(val);
 	}
 }

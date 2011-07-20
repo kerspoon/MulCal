@@ -1,3 +1,5 @@
+MulCal by James Brooks
+
 ---- Objective ----
 
 A calculator application that deals with: 
@@ -34,18 +36,21 @@ Running mulCal.main.TextInput will give you a text based calculator, start each 
 
 ---- Command line Options ----
 
-    s[ave] <filename>	 -- save history to csv file for excel import
-    r[eset]	 -- clear history
-    l[oad] <filename>	 -- replace history with csv file
-    e[quation] <equation string>	-- evaluate equation and add to history
-    c[omment] <id> <string>	 -- add comment to history item
-    u[pdate]	 -- download new currency conversion values
-    f[rom] <date string>	 -- update the from date (and selects it)
-    t[ill] <date string>	 -- update the till date (and selects it)
-    d[ays] <number>	 -- update selected date to give correct days
-    w[eeks] <number>	 -- update selected date to give correct weeks
-    m[onths] <number>	 -- update selected date to give correct months
-    y[ears] <number>	 -- update selected date to give correct years
+    q[uit]                   -- exit the program
+    h[elp]                   -- display this message
+    s[ave]     <filename>    -- save history to csv file for excel import
+    r[eset]                  -- clear history
+    l[oad]     <filename>    -- replace history with csv file
+    e[quation] <equation>    -- evaluate equation and add to history
+    c[omment]  <id> <string> -- add comment to history item
+    p[rint]    <id?>         -- show history item; black for all
+    u[pdate]                 -- download new currency conversion values
+    f[rom]     <date>        -- update the from date (and selects it)
+    t[ill]     <date>        -- update the till date (and selects it)
+    d[ays]     <number>      -- update selected date to give correct days
+    w[eeks]    <number>      -- update selected date to give correct weeks
+    m[onths]   <number>      -- update selected date to give correct months
+    y[ears]    <number>      -- update selected date to give correct years
 
 ---- CSV File Format ----
 

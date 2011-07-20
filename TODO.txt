@@ -1,14 +1,14 @@
 
 -- Todo --
 
-1. 
+1. see github tasks
 
 -- Roadmap --
 
-1. test all input types for textInput (save, equation, ...)
-1. search 'packaging java applications in eclipse'
-1. Add Currency and Calendar
-1. Add GUI.
+1. Text Based Calculator (v1)
+1. Add Currency (v2)
+1. Add Calendar (v3)
+1. Add GUI (v4)
 
 -- Optional --
 
