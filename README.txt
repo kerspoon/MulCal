@@ -23,6 +23,20 @@ Running mulCal.main.TextInput will give you a text based calculator, start each 
     D ::= cos PI = -1
     > q
     Done.
+    
+-- Milestones --
+
+1. Text Based Calculator (v1)
+1. Add Currency Special Forms (v2)
+1. Add Calendar Special Forms (v3)
+1. Add GUI (v4)
+
+---- Current Progress ----
+
+The text based version is almost complete for many things it works. It needs further testing and packaging for distribution as well as some known bugs that need fixing. There maybe be more bugs found but currently they are:
+
+1. cannot divide 11/12 as it is irrational.
+2. the id of history items can conflict with the constants.
 
 ---- Requirements ----
 
@@ -63,11 +77,11 @@ Running mulCal.main.TextInput will give you a text based calculator, start each 
 
 ---- CSV Example ----
 
-    a, "7.23"                                  , 7.23   , "pounds per hour" 
-    b, "a * 8"                                 , 57.84  , "daily wage" 
-    c, "(b/8)/3"                               , 2.41   , "" 
-    d, "GBP_USD b"                             , 76.93  , "daily USD" 
-    e, "d * [days 2010/2/4 2010/2/11]"         , 846.20 , "final value" 
+    A, "7.23"                                  , 7.23   , "pounds per hour" 
+    B, "a * 8"                                 , 57.84  , "daily wage" 
+    C, "(b/8)/3"                               , 2.41   , "" 
+    D, "GBP_USD b"                             , 76.93  , "daily USD" 
+    E, "d * [days 2010/2/4 2010/2/11]"         , 846.20 , "final value" 
 
 ---- Equation Format ----
 
@@ -85,18 +99,18 @@ Running mulCal.main.TextInput will give you a text based calculator, start each 
 
 1. 7	 # the simplest possible 'equation'
 1. +6.8123e-2	 # scientific notation
-1. 7 + 1	     	 # a function that doesn't need brackets
-1. 4.1^2	      	 # spaces are optional
-1. 5+ -2	 #
-1. 5---2	 # '-' can be part of a number, unary, or binary (one of each here)
-1. 1 + 2 * 3 + 4	 # order of precedence means this is different to the next one
+1. 7 + 1	     # a function that doesn't need brackets
+1. 4.1^2	     # spaces are optional
+1. 5+ -2	     #
+1. 5---2	     # '-' can be part of a number, unary, or binary (one of each here)
+1. 1 + 2 * 3 + 4 # order of precedence means this is different to the next one
 1. (1 + 2) * (3 + 4)	 # as the rules get changed as normal by brackets
-1. a + 1	 # using the result of a previous calc as a constant
+1. A + 1	     # using the result of a previous calculation as a constant
+1. sin cos pi	 # brackets are not enforced 
 1. [GBP_USD 70]	 # currency converting 70 from pounds to dollars
 1. [weeks 2010/2/4 2010/2/11] 	# finds number of weeks (inc. fractional weeks) in a date range
-1. Floor [USD_YEN pi]	 # brackets are not enforced 
-1. sin cos pi	 # brackets are not enforced 
-1. 5 + 3 * 2 - 4 / (8 + 1) % a
+1. tan [USD_YEN pi]	 # brackets are not enforced 
+1. 5 + 3 * 2 - 4 / (8 + 1) % A
 
 ---- Functions and Constants ----
 
@@ -107,12 +121,9 @@ Running mulCal.main.TextInput will give you a text based calculator, start each 
     binary 	logic:    	 < > <= >= == <> || &&
     unary   rounding: 	 ceil floor round abs
     constants:        	 PI E 
-    unary   currency:	 XXX_YYY (where XXX and YYY and three char codes from XE)
-    unary   VAT:	 Withvat_without Withvat_vat Withoutvat_with Withoutvat_vat Vat_with Vat_without
 
 ---- Settings File Example (cfg format) ----
 
-    [settings]
     vat = 17.5 
     USD = 1     # all currency is relative to GBP
     GBP = 70
@@ -164,6 +175,7 @@ Running mulCal.main.TextInput will give you a text based calculator, start each 
 
 ---- Extensions ----
 
+1. Use http://www.apfloat.org/apfloat_java/ to get arbitrary precision arithmetic for functions. 
 1. allow new functions to be defined in the setting file (written in lua)
 1. allow the user to specify the common functions that get displayed
 1. allow the user to add new currencies (maybe by separating cfg file into [default] and [currencies])
