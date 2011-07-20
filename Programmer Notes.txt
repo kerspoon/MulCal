@@ -1,4 +1,6 @@
 
+How to add to the calculator
+----
 
  - To add a unary prefix function (e.g sin X):
  	 1. function names must be symbols or ascii lower-case
@@ -17,4 +19,302 @@
  - To add a new constant (e.g. PI)
  	 1. constant names must be all ascii upper-case
  	 1. Add to 'mulCal.equationParser.EvalSpecial.constants'
- 	
+ 	 
+ 	 
+Old Implementation Details
+----
+
+
+
+# PositiveInteger 'num', String 'rep' -> String
+def base10toN(num, num_rep=string.digits+string.ascii_lowercase):
+    """Change 'num' to a base-n number using the specidief representation
+for instance: base10toN(num,"0123456789ABCDEF") is convert to hex
+for instance: base10toN(num,"ABCDEFGHIJKLMNOP") is also hex with a diff look
+for instance: base10toN(num,"01") convert to binary
+it can convert up to 10+26+26 = 62 using lower-ascii, upper-acsii, and digits
+"""
+base = len(num_rep)
+    new_num_string = ''
+    current = num
+    while current != 0:
+        remainder = current % base
+        if 36 > remainder:
+            remainder_string = num_rep[remainder]
+        new_num_string = remainder_string + new_num_string
+        current = current / base
+    return new_num_string
+class History:
+
+class HistoryItem:
+pass
+def __init__ (self):
+self.items = []
+current_id = 0
+def save(self, filename):
+with open(filename, 'w') as file:
+for row in self.items:
+row.equation = '"' + row.equation + '"'
+row.comment = '"' + row.comment + '"'
+row.result = str(row.result)
+file.write(", ".join(row))
+
+def clear(self):
+self.items = []
+def load(self, filename):
+with open(filename, 'r') as file:
+for line in file:
+row = HistoryItem()
+line = [v.strip() for v in line.split(',')]
+row.id = line[0]
+row.equation = line[1][1:-1]
+row.result = float(line[2])
+row.comment = line[3][1:-1]
+self.items.append(row)
+def comment(self, id, text):
+self.items[id].comment = text
+def new_id(self):
+# could check that it doesn't match any keywords
+# but if we ensure functions all start in uppercase we are ok
+# returns one at a time: 'a', 'b', 'c', ..., 'aa', 'ab', ..., 'zzzz...'
+self.current_id += 1
+return base10toN(self.current_id, string.ascii_lowercase)
+
+def add(self, id, equation, result, comment):
+row = HistoryItem()
+row.id = id
+row.equation = equation
+row.result = result
+row.comment = comment
+self.items.append(row)
+-------------------------------------------------------------------
+
+class Currency:
+def __init__(self, settings):
+self.settings = settings
+self.entry = {}
+self.currencies = "GBP USD AUD EUR THB MYR".split()
+for cur in self.currencies:
+self.entry[cur] = self.settings[cur]
+self.update()
+def convert(value, from, to):
+# it would be quicker to calc a lookup table for [to]/[from]
+# but lets see if it's slow first
+return value * (self.entry[to] / self.entry[from]) 
+def update():
+# tries to download new values from internet and 
+# saves them to the cfg file. 
+# otherwise keep all the old values
+old_entries = copy.copy(self.entry)
+try:
+for cur in self.currencies:
+val = internet_convert(1,"GBP",cur)
+self.entry[cur] = val
+self.settings[cur] = val
+self.settings.write()
+except:
+self.entry = old_entries
+def getinfo():
+return self.entry
+# http://www.hackerthreads.org/viewtopic.php?f=8&t=9560
+# http://docs.python.org/library/urllib.html
+def internet_convert(value, from, to):
+   path = '/ucc/convert.cgi?Amount=' + value + '&From=' + from.upper() + '&To=' + to.upper()
+
+   sock = socket.socket ( socket.AF_INET, socket.SOCK_STREAM )
+   sock.connect( ( 'www.xe.com', 80 ) )
+   sock.send('GET ' + path + ' HTTP/1.0\n\n')
+   response = sock.recv(1024)
+   code = response
+
+   while response != "":
+      code += response
+      response = sock.recv(1024)
+      
+   try:
+      convert = re.search('([0-9,\,]*)\.([0-9]*)' + ' ' + sys.argv[3].upper(), code )
+      textresult = convert.group(1) + '.' + convert.group(2)
+   except AttributeError:
+      msg(-1)
+   finally:
+      sock.close()
+   
+    return float(textresult)
+-------------------------------------------------------------------------------
+
+class Calendar():
+
+# http://www.daniweb.com/code/snippet216493.html
+def __init__(self):
+self.from = None
+self.till = None
+self.selected = self.from
+def set_from(date):
+self.selected = self.from
+self.selected = date.strptime(date, "%y/%m/%d")
+assert(self.selected == self.from)
+def set_till(date):
+self.selected = self.till
+self.selected = date.strptime(date, "%y/%m/%d")
+assert(self.selected == self.till)
+def set_till(span, magnitude):
+# todo: this is going to need testing
+# this also uses normalised values for months and years
+# even though it would be easy to change here it would mess
+# up the offsets. But the who point of this is to match the offset
+assert(span in set("dwmy"))
+if span is 'd':
+self.selected += datetime.timedelta(days=magnitude)
+elif span is 'w':
+self.selected += datetime.timedelta(days=7*magnitude)
+elif span is 'm':
+self.selected += datetime.timedelta(days=(12/365)*magnitude)
+elif span is 'y':
+self.selected = self.selected.replace(year=self.selected.year+magnitude)
+else:
+error("") 
+
+def calc_offset(from, to):
+# returns a dict with keys {days, weeks, months, years}
+# as is it takes normalised/averaged values for months and years
+# meaning feburary 1 to march 1 is less than a month according to this
+# and doesn't deal with partial weeks (wed - wed) is one week 
+# in some cases it would be better to only count full weeks (but it's tricky)
+# see http://stackoverflow.com/questions/4039879/
+# and http://stackoverflow.com/questions/4392594/
+range = to - from
+res = {}
+res[days] = range.days 
+res[weeks] = range.days/7
+res[months] = range.days*(12/365)
+res[years] = range.days/365
+return res
+--------------------------------------------------------------------------------
+parse_float = Combine( 
+Word( "+-"+nums, nums ) + 
+Optional( Literal( "." ) + Optional( Word( nums ) ) ) +
+    Optional( CaselessLiteral( "E" ) + Word( "+-"+nums, nums ) ) ).setParseAction( lambda s,l,t: [ float(t[0]) ] )
+
+parse_variable = Word(string.acsii_lowercase)
+parse_date = Regex(r"[0-9]{4}/[0-9]{2}/[0-9]{2}")
+parse_date_eqn  = '[' + oneOf("days weeks months years") + parse_date + parse_date + ']'
+parse_operand = parse_float | parse_variable | parse_date_eqn 
+
+parse_unary_func = oneOf("SIN COS TAN ASIN ACOS ATAN LOG LN EXP ! CEIL FLOOR ROUND ABS SQRT")
+
+parse_currency_func = Regex(r"[A-Z]{3}_[A-Z]{3}")
+
+expr = operatorPrecedence( parse_operand,
+    [
+     ("^", 2, opAssoc.RIGHT),           	 # exponentiation
+     (oneOf("+ -"), 1, opAssoc.RIGHT),  				# unary sign operations
+     (oneOf("* / %"), 2, opAssoc.LEFT), 				# arithmetic operations
+     (oneOf("+ -"), 2, opAssoc.LEFT)]   				# arithmetic operations
+     (parse_unary_func, 1, opAssoc.RIGHT),  	 # unary func operations
+     (parse_currency_func, 1, opAssoc.RIGHT),  	 # currency conversion
+ (oneOf("<  <=  >  >= == <>"), 2, opAssoc.LEFT)]	# comparisons
+ ("NOT", 1, opAssoc.RIGHT),          	 # logical negation
+ (oneOf("&& AND"), 2, opAssoc.LEFT)]	 # logical AND
+ (oneOf("|| OR"), 2, opAssoc.LEFT)] # logical OR
+    ) + StringEnd()
+def eval_line(string, history, currency, date):
+# wow, this is really cheating
+# rather than parsing the expression I just give it to python
+# it will work as long as every function I want to execute is in scope
+# and no-one trys to do anything funny.
+# todo: make all the functions that work with currency and vat
+# todo: make this deal with calendar enteries
+id = history.new_id()
+res = float(eval(id + " = " + string))
+history.add(id, string, res, "")
+return res 
+--------------------------------------------------------------------------------
+
+class Settings():
+def __init__(self):
+self.filename = "settings.txt"
+self.defaults = {
+'vat': '17.5', 
+'GBP': '1.0', 
+'USD': '1.60', 
+'AUD': '1.60', 
+'EUR': '1.18', 
+'THB': '49.55', 
+'MYR': '4.9'}
+self.config = ConfigParser.RawConfigParser(self.defaults)
+def read(self):
+try:
+self.config.read(file)
+except:
+pass
+def write(self):
+try:
+with open(self.filename, "w") as file:
+self.config.write(file)
+except:
+pass
+def __getitem__(self, key)
+return self.config.get("settings", key)
+
+def __setitem__(self, key, value):
+assert (key in self.defaults.keys())
+return self.config.set("settings", key, str(value))
+
+--------------------------------------------------------------------------------
+
+def as_filename(text):
+"""makes sure input either is a quoted string only or
+   has no spaces in it. Returns without the quotes."""
+text = text.strip()
+if text[0] == '"' == text[-1]:
+return text[1:-1]
+else:
+assert set(string.whitespace).is_disjoint(set(text))
+return text
+
+vat = 17.5
+
+def main():
+history = History()
+settings = Settings()
+currency = Currency(settings)
+date = Calendar()
+while(True):
+try:
+inp = raw_input('>')
+if len(inp) == 0:
+continue
+
+# <spaces> <keyword> <spaces> <everything>
+match = re.match(r"\A\s*(\S*)\s*(.*)")
+key, val = match.group(1), match.group(2)
+if "quit".starts_with(key):
+break
+elif "save".starts_with(key):
+history.save(as_filename(val))
+elif "reset".starts_with(key):
+history.clear()
+elif "load".starts_with(key):
+history.load(as_filename(val))
+elif "equation".starts_with(key):
+res = eval_line(val, history, currency, date)
+print res
+elif "comment".starts_with(key):
+sinp = val.split()
+history.comment(sinp[0], sinp[1])
+elif "update".starts_with(key):
+currency.update()
+elif "from".starts_with(key):
+date.set_from(val)
+elif "till".starts_with(key):
+date.set_till(val)
+elif "days".starts_with(key) or "weeks".starts_with(key) or
+"months".starts_with(key) or "years".starts_with(key):
+date.set_range(key[0], val)
+else:
+throw Exception("unrecognised input")
+catch:
+# todo: only catch specific stuff
+print("Error: unexpected input")
+
+
