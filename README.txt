@@ -185,6 +185,7 @@ The text based version is almost complete for many things it works. It needs fur
 1. make a block for most commonly used function for that user
 1. make a block for most commonly used history items in the current session
 1. accessibility mode for GUI - pressing esc should give floating id's to each click-able, typing that id clicks the thing.
+1. make `display-precision = 2` & `eval-precision = 20` in settings and to allow better maths.
 
 ---- Classes ----
 

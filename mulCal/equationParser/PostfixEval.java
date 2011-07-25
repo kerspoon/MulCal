@@ -50,7 +50,11 @@ public class PostfixEval {
 		} else if (text.equals("-")) {
 			return value1.subtract(value2);
 		} else if (text.equals("/")) {
-			return value1.divide(value2);
+			try {
+				return value1.divide(value2);
+			} catch (ArithmeticException e) {
+				return value1.divide(value2, 20, BigDecimal.ROUND_HALF_UP);
+			}
 		} else if (text.equals("*")) {
 			return value1.multiply(value2);
 		} else if (text.equals("%")) {

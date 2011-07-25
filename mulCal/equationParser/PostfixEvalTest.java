@@ -21,10 +21,13 @@ public class PostfixEvalTest {
 		assertEquals(new BigDecimal("23"), eval(toRPN(toTokens("(10 * 2) + 3"))));
 		assertEquals(new BigDecimal("50"), eval(toRPN(toTokens("10 * (2 + 3)"))));
 		assertEquals(new BigDecimal("1"), eval(toRPN(toTokens("2 - 1"))));
+		assertEquals(new BigDecimal("0.5"), eval(toRPN(toTokens("5.00 / 10.00"))));
+		assertEquals(new BigDecimal("0.500"), eval(toRPN(toTokens("5.000000000 / 10.000000"))));
 		assertEquals(new BigDecimal("0.5"), eval(toRPN(toTokens("5 / 10"))));
 		assertEquals(new BigDecimal("1"), eval(toRPN(toTokens("10 % 3"))));
+		assertTrue(0.001 > eval(toRPN(toTokens("1 / 3"))).subtract(new BigDecimal("0.3333333333333333333")).floatValue());
 	}
-	
+
 	@Test
 	public void testEvalFunctions() throws Exception {
 		assertEquals(new BigDecimal("3"), eval(toRPN(toTokens("1 + nul 2"))));
