@@ -20,7 +20,16 @@ How to add to the calculator
  	 1. constant names must be all ascii upper-case
  	 1. Add to 'mulCal.equationParser.EvalSpecial.constants'
  	 
+------------------------------------------------------------------------------
+
+http://jsmooth.sourceforge.net/screenshots.php
+http://www.excelsior-usa.com/articles/java-to-exe.html
+http://launch4j.sourceforge.net/
+http://one-jar.sourceforge.net/
+
  	 
+------------------------------------------------------------------------------
+
 Old Implementation Details
 ----
 

@@ -4,6 +4,7 @@ import static junit.framework.Assert.assertEquals;
 import static mulCal.equationParser.InfixToRPN.toRPN;
 import static mulCal.equationParser.PostfixEval.eval;
 import static mulCal.equationParser.Tokenize.toTokens;
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
@@ -34,5 +35,11 @@ public class PostfixEvalTest {
 		assertEquals(new BigDecimal("-1"), eval(toRPN(toTokens("-abs-1"))));
 		assertTrue(eval(toRPN(toTokens("sin 3.14159265"))).doubleValue() < 0.0001);
 		assertTrue(eval(toRPN(toTokens("sin(3.14159265)"))).doubleValue() < 0.0001);
+	}
+	
+	@Test(expected=ArithmeticException.class)
+	public void testFailDivZero() throws Exception {
+		eval(toRPN(toTokens("1/0")));
+		
 	}
 }
