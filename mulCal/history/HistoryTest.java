@@ -55,4 +55,24 @@ public class HistoryTest {
 		assertEquals(first.comment, "");
 		
 	}
+
+	@Test
+	public void testNoConstants() throws Exception {
+		// check that it doesn't return E as an id as it is a constant
+		History history = new History();
+		history.Add("0+1", new BigDecimal("1")); // A
+		history.Add("0+2", new BigDecimal("2")); // B
+		history.Add("0+3", new BigDecimal("3")); // C
+		history.Add("0+4", new BigDecimal("4")); // D
+		history.Add("0+5", new BigDecimal("5")); // F*
+		history.Add("0+6", new BigDecimal("6")); // G
+
+		assertEquals(history.get("A").result, new BigDecimal("1"));
+		assertEquals(history.get("B").result, new BigDecimal("2"));
+		assertEquals(history.get("C").result, new BigDecimal("3"));
+		assertEquals(history.get("D").result, new BigDecimal("4"));
+		assertEquals(history.get("F").result, new BigDecimal("5")); // note not E
+		assertEquals(history.get("G").result, new BigDecimal("6"));
+		
+	}
 }

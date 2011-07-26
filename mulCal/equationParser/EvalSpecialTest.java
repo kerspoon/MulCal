@@ -21,7 +21,7 @@ public class EvalSpecialTest {
 		// create history
 		History history = new History();
 		history.Add("1+1", new BigDecimal("2"));
-		history.Add("a*3", new BigDecimal("6"));
+		history.Add("A*3", new BigDecimal("6"));
 		
 		// create token list
 		List<Token> tokens = toTokens("1+2");

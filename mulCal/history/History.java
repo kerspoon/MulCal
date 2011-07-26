@@ -11,6 +11,7 @@ import java.util.TreeMap;
 
 import lib.au.com.bytecode.opencsv.CSVReader;
 import lib.au.com.bytecode.opencsv.CSVWriter;
+import mulCal.equationParser.EvalSpecial;
 import mulCal.util.KeyException;
 
 
@@ -158,11 +159,14 @@ public class History {
 
 	private String NewID() {
 		// could check that it doesn't match any keywords
-		// but if we ensure functions all start in uppercase we are ok
-		// returns one at a time: 'a', 'b', 'c', ..., 'aa', 'ab', ..., 'zzzz...'
-		// TODO: make sure we dont match any constants
-		String result = Base10toN(this.currentID, History.asciiUpperCase);
-		this.currentID += 1;
+		// but if we ensure functions all start in lowercase we are ok
+		// returns one at a time: 'A', 'B', 'C', ..., 'BA', 'BB', ..., 'ZZZZ...'
+		// make sure we don't match any constants
+		String result;
+		do {
+			result = Base10toN(this.currentID, History.asciiUpperCase);
+			this.currentID += 1;
+		} while (EvalSpecial.constants.containsKey(result));
 		return result;
 	}
 	

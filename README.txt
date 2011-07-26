@@ -33,10 +33,7 @@ Running mulCal.main.TextInput will give you a text based calculator, start each 
 
 ---- Current Progress ----
 
-The text based version is almost complete for many things it works. It needs further testing and packaging for distribution as well as some known bugs that need fixing. There maybe be more bugs found but currently they are:
-
-1. cannot divide 11/12 as it is irrational.
-2. the id of history items can conflict with the constants.
+The text based version is almost complete for many things it works. It needs further testing and packaging for distribution.
 
 ---- Requirements ----
 
