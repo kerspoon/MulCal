@@ -1,6 +1,8 @@
 MulCal by James Brooks
+====
 
----- Objective ----
+Objective
+----
 
 A calculator application that deals with: 
 
@@ -11,9 +13,10 @@ A calculator application that deals with:
 
 Every equation evaluated is stored as a history which can be annotated and used in later equations as constants. This history can be saved to use in excel.
 
----- Quick Start ----
+Quick Start
+----
 
-Running mulCal.main.TextInput will give you a text based calculator, start each equation with 'e ', quit by entering 'q'. The results are given an ID this can be used a a constant in other calculations.
+Running `mulCal.main.TextInput` will give you a text based calculator, start each equation with 'e ', quit by entering 'q'. The results are given an ID this can be used a a constant in other calculations.
 
     > e 1+1
     A ::= 1+1 = 2
@@ -24,18 +27,21 @@ Running mulCal.main.TextInput will give you a text based calculator, start each 
     > q
     Done.
     
--- Milestones --
+Milestones
+----
 
 1. Text Based Calculator (v1)
 1. Add Currency Special Forms (v2)
 1. Add Calendar Special Forms (v3)
 1. Add GUI (v4)
 
----- Current Progress ----
+Current Progress
+----
 
 The text based version is almost complete for many things it works. It needs further testing for distribution.
 
----- Requirements ----
+Requirements
+----
 
 1. parsing command line arguments
 1. parsing dates and calculating difference between dates
@@ -45,7 +51,8 @@ The text based version is almost complete for many things it works. It needs fur
 1. downloading information from internet
 1. convert number to arbitrary base with arbitrary encoding
 
----- Command line Options ----
+Command line Options 
+----
 
     q[uit]                   -- exit the program
     h[elp]                   -- display this message
@@ -63,7 +70,8 @@ The text based version is almost complete for many things it works. It needs fur
     m[onths]   <number>      -- update selected date to give correct months
     y[ears]    <number>      -- update selected date to give correct years
 
----- CSV File Format ----
+CSV File Format
+----
 
     rule TOP	  { <line>* }
     rule line	  { <id> ',' <equation> ',' <value> ',' <comment> }
@@ -72,7 +80,8 @@ The text based version is almost complete for many things it works. It needs fur
     rule value	  { <real_number> } 
     rule comment  { <quoted_string> } 
 
----- CSV Example ----
+CSV Example
+----
 
     A, "7.23"                                  , 7.23   , "pounds per hour" 
     B, "a * 8"                                 , 57.84  , "daily wage" 
@@ -80,7 +89,8 @@ The text based version is almost complete for many things it works. It needs fur
     D, "GBP_USD b"                             , 76.93  , "daily USD" 
     E, "d * [days 2010/2/4 2010/2/11]"         , 846.20 , "final value" 
 
----- Equation Format ----
+Equation Format 
+----
 
     rule TOP	 { <entry> }
     rule entry	 { <number> | <unary_function> | <binary_func> | <bracketed> | <date_calc> | <constant> }
@@ -92,24 +102,29 @@ The text based version is almost complete for many things it works. It needs fur
     rule timespan	{ 'days' | 'weeks' | 'months' | 'years' }
     rule date		{ <number> '/' <number> '/' <number> }
 
----- Equation Examples ----
+Equation Examples 
+----
 
-1. 7	 # the simplest possible 'equation'
-1. +6.8123e-2	 # scientific notation
-1. 7 + 1	     # a function that doesn't need brackets
-1. 4.1^2	     # spaces are optional
-1. 5+ -2	     #
-1. 5---2	     # '-' can be part of a number, unary, or binary (one of each here)
-1. 1 + 2 * 3 + 4 # order of precedence means this is different to the next one
-1. (1 + 2) * (3 + 4)	 # as the rules get changed as normal by brackets
-1. A + 1	     # using the result of a previous calculation as a constant
-1. sin cos pi	 # brackets are not enforced 
-1. [GBP_USD 70]	 # currency converting 70 from pounds to dollars
-1. [weeks 2010/2/4 2010/2/11] 	# finds number of weeks (inc. fractional weeks) in a date range
-1. tan [USD_YEN pi]	 # brackets are not enforced 
-1. 5 + 3 * 2 - 4 / (8 + 1) % A
-
----- Functions and Constants ----
+    7                 # the simplest possible 'equation'
+    +6.8123e-2        # scientific notation
+    7 + 1             # a function that doesn't need brackets
+    4.1^2             # spaces are optional
+    ((((-2.7))))      # extra brackets are ok
+    sin -2            # a space is needed to seperate the function and the negative number
+    5---2             # '-' can be part of a number, unary, or binary (one of each here)
+    1 + 2 * 3 + 4     # order of precedence means this is different to the next one
+    (1 + 2) * (3 + 4) # as the rules get changed as normal by brackets
+    A + 1             # using the result of a previous calculation as a constant
+    sin cos pi        # brackets are not enforced 
+    [GBP_USD 70]      # currency converting 70 from pounds to dollars
+    tan [USD_YEN pi]  # brackets are not enforced 
+    [weeks 2010/2/4 2010/2/11]   # finds number of weeks (inc. fractional weeks) in a date range
+    5 + 3 * 2 - 4 / (8 + 1) % A  # 
+    1+2-3*4/5^6                           # infix operators
+    sin cos tan exp log sqrt signum abs E # prefix functions
+    
+Functions and Constants 
+----
 
 (constants must be only upper case chars functions cannot be)
 
@@ -119,16 +134,18 @@ The text based version is almost complete for many things it works. It needs fur
     unary   rounding: 	 ceil floor round abs
     constants:        	 PI E 
 
----- Settings File Example (cfg format) ----
+Settings File Example (cfg format) 
+----
 
     vat = 17.5 
     USD = 1     # all currency is relative to GBP
     GBP = 70
     EUR = 60
  
----- GUI Keys ----
+GUI Keys 
+----
 
-**global**
+**Global**
 
  + ctrl-s   : save history
  + ctrl-del : clear history
@@ -139,7 +156,7 @@ The text based version is almost complete for many things it works. It needs fur
  + buttons and other entry boxes:
  + enter   : same as mouse click
 
-**calendar-selector**
+**Calendar-selector**
 
  + arrow keys  : move by day/week (wrap on edges)
  + pg_up/down  : move my month
@@ -156,7 +173,7 @@ The text based version is almost complete for many things it works. It needs fur
  + enter	 : same as click on current cell
  + shift-enter : edit cell where possible
 
-**history**
+**History**
 
  + arrow keys  : move by cell (no wrap on edges)
  + pg_up/down  : page up/down
@@ -164,13 +181,14 @@ The text based version is almost complete for many things it works. It needs fur
  + shift-arrow : first/last row/column
  + enter	 : same as click on current cell
 
-**equation-line**
+**Equation-line**
 
  + enter       : same as click on (n)
  + ctrl-a      : select all text in line 
  + pg_up/down  : page up/down history
 
----- Extensions ----
+Extensions 
+----
 
 1. Use http://www.apfloat.org/apfloat_java/ to get arbitrary precision arithmetic for functions. 
 1. allow new functions to be defined in the setting file (written in lua)
@@ -185,14 +203,15 @@ The text based version is almost complete for many things it works. It needs fur
 1. make `display-precision = 2` & `eval-precision = 20` in settings and to allow better maths.
 1. package using a launcher so all mac people need is to double click and windows sees an exe.
 
----- Classes ----
+Classes 
+----
 
-1. History -- a history of all equations typed
-1. Currency -- holds the currency conversion gathered from settings file, defaults or internet
-1. Calendar -- holds the selected from and till dates and does calculations on them
-1. Settings -- reads/writes a cfg file with the last updated currencies ant vat
-1. Main -- the controller between the interface, e.g. GUI or command line, and the other classes
-1. TextInput -- Gets run by the user to run as a command line application. Passes commands to Main.
-1. GUI -- Gets run by the user to run as a GUI application. Passes commands to Main.
+1. `History` -- a history of all equations typed
+1. `Currency` -- holds the currency conversion gathered from settings file, defaults or internet
+1. `Calendar` -- holds the selected from and till dates and does calculations on them
+1. `Settings` -- reads/writes a cfg file with the last updated currencies ant vat
+1. `Main` -- the controller between the interface, e.g. GUI or command line, and the other classes
+1. `TextInput` -- Gets run by the user to run as a command line application. Passes commands to Main.
+1. `GUI` -- Gets run by the user to run as a GUI application. Passes commands to Main.
 
 -------------------------------------------------------------------------
