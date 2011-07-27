@@ -4,7 +4,6 @@ import static junit.framework.Assert.assertEquals;
 import static mulCal.equationParser.InfixToRPN.toRPN;
 import static mulCal.equationParser.PostfixEval.eval;
 import static mulCal.equationParser.Tokenize.toTokens;
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
