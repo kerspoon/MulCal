@@ -83,8 +83,6 @@ public class TextInput {
 					String id = main.getLastID();
 	        		System.out.format("%s ::= %s = %s%n", id, val, result.toString());
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 	        		System.out.println("Equation Failed.");
 				}
 	        } else if ("comment".startsWith(key)) {

@@ -95,6 +95,7 @@ public class Tokenize {
 	}
 
 	public static String readNumber(String input) {
+		// TODO add scientific notation
 	    Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
 	    Matcher matcher = pattern.matcher(input);
 	    matcher.lookingAt();

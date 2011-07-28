@@ -63,8 +63,6 @@ public class Main {
 			history.SetComment(id, comment);
 			return true;
 		} catch (KeyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			return false;
 		}
 	}
