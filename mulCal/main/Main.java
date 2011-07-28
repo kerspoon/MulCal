@@ -18,7 +18,7 @@ import mulCal.util.KeyException;
 
 public class Main {
 
-	private History history;
+	public History history;
 	private String lastId;
 	
 	public Main() {

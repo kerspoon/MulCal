@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.NavigableSet;
 import java.util.TreeMap;
 
 import lib.au.com.bytecode.opencsv.CSVReader;
@@ -29,7 +30,7 @@ import mulCal.util.KeyException;
 
 public class History {
 	
-	public class HistoryItem {
+	public static class HistoryItem {
 		public String id;
 		public String equation;
 		public BigDecimal result;
@@ -156,6 +157,10 @@ public class History {
 	public boolean ContainsID(String id) {
 		return this.items.containsKey(id);
 	}
+	
+	public int size() {
+		return this.items.size();
+	}
 
 	private String NewID() {
 		// could check that it doesn't match any keywords
@@ -178,5 +183,15 @@ public class History {
 			return false;
 		}
 		return true;
+	}
+	
+	public String lookupIdFromRow(int rowIndex) {
+		int count=0;
+		for (String id : items.navigableKeySet()) {
+			if (rowIndex == count)
+				return id;
+			count+=1;
+		}
+		throw new RuntimeException("key error");
 	}
 }
