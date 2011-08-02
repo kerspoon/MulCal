@@ -36,7 +36,9 @@ public class TextInput {
 	        String key = matcher.group(1);
 	        String val = matcher.group(2);
 	        
-	        if ("quit".startsWith(key)) {
+	        if (key.length() == 0) {
+	        	return;
+	        } else if ("quit".startsWith(key)) {
 	        	// todo: quit properly
 	        	quitting = true;
 	        } else if ("help".startsWith(key)) {

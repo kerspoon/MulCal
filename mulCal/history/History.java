@@ -7,7 +7,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Collection;
-import java.util.NavigableSet;
 import java.util.TreeMap;
 
 import lib.au.com.bytecode.opencsv.CSVReader;
