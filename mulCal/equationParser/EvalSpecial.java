@@ -11,6 +11,7 @@ import java.util.Map;
 import mulCal.equationParser.Tokenize.Token;
 import mulCal.equationParser.Tokenize.TokenType;
 import mulCal.history.History;
+import mulCal.util.KeyException;
 
 public class EvalSpecial {
 	
@@ -22,7 +23,7 @@ public class EvalSpecial {
         constants = Collections.unmodifiableMap(tmpMap);
     }
     
-	public static List<Token> evalSpecial(List<Token> tokens, History history, Map<String, BigDecimal> constants) throws Exception {
+	public static List<Token> evalSpecial(List<Token> tokens, History history, Map<String, BigDecimal> constants) throws KeyException {
 		List<Token> result = new LinkedList<Token>();
 		for (Token tok : tokens) {
 			if (tok.type == TokenType.VARIABLE) {
@@ -41,8 +42,8 @@ public class EvalSpecial {
 	}
 
 	private static Token evalSpecialForm(Token tok, List<Token> tokens,
-			History history, Map<String, BigDecimal> constants2) throws Exception {
+			History history, Map<String, BigDecimal> constants2) throws RuntimeException {
 		// TODO: implement when we have specials (calendar or currency)
-		throw new Exception(); // shouldn't really do this
+		throw new RuntimeException(); // shouldn't really do this
 	}
 }

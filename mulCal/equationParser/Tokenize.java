@@ -34,7 +34,7 @@ public class Tokenize {
 		return result;
 	}
 	
-	public static List<Token> toTokens(String input) {
+	public static List<Token> toTokens(String input) throws Exception {
 		List<Token> tokens = new LinkedList<Token>();
 		input = input.trim();
 		while (input.length() != 0) {
@@ -80,11 +80,15 @@ public class Tokenize {
 		return matcher.lookingAt();
 	}
 
-	public static String readFunction(String input) {
-	    Pattern pattern = Pattern.compile("[a-z]+|[!%*/+]|\\^|\\-");
-	    Matcher matcher = pattern.matcher(input);
-	    matcher.lookingAt();
-		return matcher.group();
+	public static String readFunction(String input) throws Exception {
+	    try {
+		    Pattern pattern = Pattern.compile("[a-z]+|[!%*/+]|\\^|\\-");
+		    Matcher matcher = pattern.matcher(input);
+		    matcher.lookingAt();
+			return matcher.group();
+		} catch (IllegalStateException e) {
+			throw new Exception("Tokenize.readFunction: cannot understand equation " + input);
+		}
 	}
 
 	public static String readVariable(String input) {

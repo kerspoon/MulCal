@@ -78,7 +78,7 @@ public class History {
 			while ((line = reader.readNext()) != null) {
 				// nextLine[] is an array of values from the line
 				if (line.length != 4) {
-					throw new IllegalArgumentException("error with row insertion");
+					throw new IllegalArgumentException("History.Load: Error with row insertion");
 				}
 				String id = line[0];
 				String equation = line[1];
@@ -89,7 +89,7 @@ public class History {
 					this.items.put(row.id, row);
 				}
 				else {
-					throw new IllegalArgumentException("error with row insertion");
+					throw new IllegalArgumentException("History.Load: Error with row insertion");
 				}
 			}
 		} finally {
@@ -125,7 +125,7 @@ public class History {
 			item.comment = comment;
 			this.items.put(item.id, item);
 		} else {
-			throw new KeyException();
+			throw new KeyException("History.SetComment: Cannot find history item " + id);
 		}
 	}
 	
@@ -137,7 +137,7 @@ public class History {
 			this.items.put(id, item);
 			return id;
 		} else {
-			throw new IllegalArgumentException("error with row insertion");
+			throw new IllegalArgumentException("History.Add: Error with row insertion");
 		}
 	}
 
@@ -149,7 +149,7 @@ public class History {
 		if (this.items.containsKey(id))	{
 			return this.items.get(id);
 		} else {
-			throw new KeyException(id);
+			throw new KeyException("History.get: Cannot find history item " + id);
 		}
 	}
 
@@ -191,6 +191,6 @@ public class History {
 				return id;
 			count+=1;
 		}
-		throw new RuntimeException("key error");
+		throw new RuntimeException("History.lookupIdFromRow: Programmer error - key error " + rowIndex);
 	}
 }

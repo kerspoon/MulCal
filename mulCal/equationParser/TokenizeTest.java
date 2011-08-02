@@ -106,12 +106,12 @@ public class TokenizeTest {
 		assertEquals(readFunction("-c"), "-");
 	}
 	
-	@Test(expected=IllegalStateException.class)
+	@Test(expected=Exception.class)
 	public void testReadFunctionFail() throws Exception {
 		readFunction("7+");
 	}
 	
-	@Test(expected=IllegalStateException.class)
+	@Test(expected=Exception.class)
 	public void testReadFunctionFail2() throws Exception {
 		readFunction("E*");
 	}

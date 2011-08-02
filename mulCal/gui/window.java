@@ -84,7 +84,6 @@ public class window {
 			        		String equationString = txtCalculate.getText(); 
 							try {
 								main.equation(equationString);
-								// TODO update table
 								tblmdlHistory.newRow();
 							} catch (Exception e1) {
 								// TODO Auto-generated catch block

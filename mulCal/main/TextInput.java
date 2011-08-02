@@ -97,7 +97,8 @@ public class TextInput {
 					String id = main.getLastID();
 	        		System.out.format("%s ::= %s = %s%n", id, val, result.toString());
 				} catch (Exception e) {
-	        		System.out.println("Equation Failed.");
+					// e.printStackTrace();
+	        		System.out.println("Equation Failed: " + e.getMessage());
 				}
 	        } else if ("comment".startsWith(key)) {
 	    	    Pattern pattern2 = Pattern.compile("\\A\\s*(\\S*)\\s*(.*)");

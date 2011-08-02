@@ -1,6 +1,7 @@
 package mulCal.equationParser;
 
 import java.math.BigDecimal;
+import java.util.EmptyStackException;
 import java.util.List;
 import java.util.Stack;
 
@@ -18,6 +19,9 @@ public class PostfixEval {
 
 	public static BigDecimal eval(List<Token> tokens) throws Exception {
 		Stack<BigDecimal> stack = new Stack<BigDecimal>();
+		if (tokens.size() == 0) {
+			throw new Exception("PostfixEval.eval: No equation given.");
+		}
 		for (Token token : tokens) {
 			if (token.type == TokenType.NUMBER) {
 				stack.push(new BigDecimal(token.text));
@@ -25,20 +29,24 @@ public class PostfixEval {
 				// pop stack as value
 				// eval token.text ( value ) as result
 				// push result to stack
-				BigDecimal value = stack.pop();
-				BigDecimal result = EvaluateFunction(token.text, value);
-				stack.push(result);
+				try {
+					BigDecimal value = stack.pop();
+					BigDecimal result = EvaluateFunction(token.text, value);
+					stack.push(result);
+				} catch (EmptyStackException e) {
+					throw new Exception("PostfixEval.eval: Too many operators.");
+				}
 			} else if (token.type == TokenType.OPERATOR) {
 				BigDecimal value1 = stack.pop();
 				BigDecimal value2 = stack.pop();
 				BigDecimal result = EvaluateOperator(token.text, value2, value1);
 				stack.push(result);
 			} else {
-				throw new Exception();
+				throw new Exception("PostfixEval.eval: programmer error - unexpected token type " + token.type);
 			}
 		}
 		if (stack.size() != 1) {
-			throw new Exception("");
+			throw new Exception("PostfixEval.eval: Too many numbers.");
 		}
 		return stack.pop();
 	}
@@ -62,7 +70,7 @@ public class PostfixEval {
 		} else if (text.equals("^")) {
 			return new BigDecimal(Math.pow(value1.doubleValue(),value2.doubleValue()));
 		} else {
-			throw new Exception();
+			throw new Exception(String.format("PostfixEval.EvaluateOperator: '%s' is not an operator but one was expected there.", text));
 		}
 	}
 
@@ -88,7 +96,7 @@ public class PostfixEval {
 		} else if (text.equals("-")) {
 			return value.negate();
 		} else {
-			throw new Exception();
+			throw new Exception(String.format("PostfixEval.EvaluateFunction: '%s' is not a function but one was expected there.", text));
 		}
 	}
 }

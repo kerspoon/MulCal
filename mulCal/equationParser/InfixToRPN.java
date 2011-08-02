@@ -17,7 +17,7 @@ public class InfixToRPN {
     // Supported operators
     private static final Map<String, int[]> Operators = new HashMap<String, int[]>();
     static {
-        // Map<"token", []{precendence, associativity}>
+        // Map<"token", []{precedence, associativity}>
         Operators.put("+", new int[] { 0, LEFT_ASSOC });
         Operators.put("-", new int[] { 0, LEFT_ASSOC });
         Operators.put("*", new int[] { 5, LEFT_ASSOC });
@@ -70,13 +70,13 @@ public class InfixToRPN {
 					stack.pop();
 				}
 				else {
-					throw new Exception("mismatched parentheses");
+					throw new Exception("InfixToRPN.toRPN: Mismatched parentheses (you forgot a bracket).");
 				}
 				if (!stack.empty() && stack.peek().type == Tokenize.TokenType.FUNCTION) {
 					out.add(stack.pop());
 				}
 			} else {
-				throw new Exception();
+				throw new Exception("InfixToRPN.toRPN: Programmer error - unexpected token type " + token.type);
 			}
 		}
 
@@ -89,7 +89,7 @@ public class InfixToRPN {
         	if (stack.peek().type == Tokenize.TokenType.OPENBRACKET || 
         			stack.peek().type == Tokenize.TokenType.CLOSEBRACKET )
         	{
-        		throw new Exception("mismatched parentheses");
+				throw new Exception("InfixToRPN.toRPN: Mismatched parentheses (you forgot a bracket).");
         	}
             out.add(stack.pop());
         }
@@ -99,14 +99,14 @@ public class InfixToRPN {
 	
     private static int precidence(Token token) {
         if (!isOperator(token)) {
-            throw new IllegalArgumentException("Invalid token: " + token.text);
+            throw new IllegalArgumentException("InfixToRPN.precidence: Invalid token: " + token.text);
         }
 		return Operators.get(token.text)[0];
 	}
 
 	private static boolean leftAssociative(Token token) {
         if (!isOperator(token)) {
-            throw new IllegalArgumentException("Invalid token: " + token.text);
+            throw new IllegalArgumentException("InfixToRPN.leftAssociative: Invalid token: " + token.text);
         }
         if (Operators.get(token.text)[1] == LEFT_ASSOC) {
             return true;
