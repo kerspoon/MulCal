@@ -71,7 +71,10 @@ public class History {
 
 	public void Load(String fileName) throws IOException {
 		// e, "d * [days 2010/2/4 2010/2/11]"         , 846.20 , "final value" 
-
+		
+		// TODO: if you don't want to reset then properly deal with giving the loaded items new id's. 
+		reset();
+		
 		CSVReader reader = new CSVReader(new FileReader(fileName));
 		try {
 			String [] line;
@@ -114,7 +117,8 @@ public class History {
 		}
 	}
 	
-	public void Clear() {
+	public void reset() {
+		this.currentID = 0;
 		this.items.clear();
 	}
 

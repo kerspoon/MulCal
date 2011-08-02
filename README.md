@@ -61,7 +61,7 @@ Command line Options
     l[oad]     <filename>    -- replace history with csv file
     e[quation] <equation>    -- evaluate equation and add to history
     c[omment]  <id> <string> -- add comment to history item
-    p[rint]    <id?>         -- show history item; black for all
+    p[rint]    <id?>         -- show history item; blank for all
     u[pdate]                 -- download new currency conversion values
     f[rom]     <date>        -- update the from date (and selects it)
     t[ill]     <date>        -- update the till date (and selects it)
@@ -202,6 +202,7 @@ Extensions
 1. accessibility mode for GUI - pressing esc should give floating id's to each click-able, typing that id clicks the thing.
 1. make `display-precision = 2` & `eval-precision = 20` in settings and to allow better maths.
 1. package using a launcher so all mac people need is to double click and windows sees an exe.
+1. it may may more sense for comments, save & load to require quoted text.
 
 Classes 
 ----

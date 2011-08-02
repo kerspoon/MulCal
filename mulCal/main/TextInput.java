@@ -56,7 +56,7 @@ public class TextInput {
 	            System.out.println("l[oad]     <filename>    -- replace history with csv file");
 	            System.out.println("e[quation] <equation>    -- evaluate equation and add to history");
 	            System.out.println("c[omment]  <id> <string> -- add comment to history item");
-	            System.out.println("p[rint]    <id?>         -- show history item; black for all");
+	            System.out.println("p[rint]    <id?>         -- show history item; blank for all");
 	            System.out.println("u[pdate]                 -- download new currency conversion values");
 	            System.out.println("f[rom]     <date>        -- update the from date (and selects it)");
 	            System.out.println("t[ill]     <date>        -- update the till date (and selects it)");

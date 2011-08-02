@@ -35,7 +35,7 @@ public class Main {
 	}
 	
 	public void reset(String val) {
-		history.Clear();
+		history.reset();
 	}
 	
 	public boolean load(String val) {
