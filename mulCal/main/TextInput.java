@@ -65,6 +65,18 @@ public class TextInput {
 	            System.out.println("m[onths]   <number>      -- update selected date to give correct months");
 	            System.out.println("y[ears]    <number>      -- update selected date to give correct years");
 	        	System.out.println("");
+	        	System.out.println("---- Example ----");
+	        	System.out.println("");
+	        	System.out.println("    > e 1+1");
+	        	System.out.println("    A ::= 1+1 = 2");
+	        	System.out.println("    > e A*2");
+	        	System.out.println("    B ::= A*2 = 4");
+	        	System.out.println("    > e cos PI");
+	        	System.out.println("    D ::= cos PI = -1");
+	        	System.out.println("    > q");
+	        	System.out.println("    Done.");
+	        	System.out.println("");
+	        	System.out.println("--------");
 	        } else if ("save".startsWith(key)) {
 	        	if (main.save(val)) {
 	        		System.out.println("Save OK.");
@@ -151,6 +163,8 @@ public class TextInput {
 	}
 
     public static void main(String[] args){
+    	System.out.println("MulCal: A command line calcluator by James Brooks (kerspoon)");
+    	System.out.println("h for help, q for quit");
     	try {
     		TextInput ti = new TextInput();
     	    BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
