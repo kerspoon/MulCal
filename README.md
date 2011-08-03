@@ -38,7 +38,7 @@ Milestones
 Current Progress
 ----
 
-The text based version is almost complete for many things it works. It needs further testing for distribution.
+Version one is done. The command line calculator works - there are some known annoyances (see github:issues) but version one is complete.
 
 Requirements
 ----
