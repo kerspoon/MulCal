@@ -1,0 +1,8 @@
+
+vat = 17.5 
+GBP = 1
+USD = 10
+AUD = 20
+EUR = 30
+THB = 40
+MYR = 50

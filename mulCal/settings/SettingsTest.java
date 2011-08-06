@@ -19,7 +19,7 @@ public class SettingsTest {
 	@Test
 	public void testDefaultGBP() throws KeyException {
 		Settings set = new Settings();
-		assertEquals("1.0", set.Get("GBP"));
+		assertEquals("1.00", set.Get("GBP"));
 	}
 	
     @Test(expected=KeyException.class)

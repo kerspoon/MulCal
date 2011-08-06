@@ -98,57 +98,64 @@ row.comment = comment
 self.items.append(row)
 -------------------------------------------------------------------
 
+
+
 class Currency:
-def __init__(self, settings):
-self.settings = settings
-self.entry = {}
-self.currencies = "GBP USD AUD EUR THB MYR".split()
-for cur in self.currencies:
-self.entry[cur] = self.settings[cur]
-self.update()
-def convert(value, from, to):
-# it would be quicker to calc a lookup table for [to]/[from]
-# but lets see if it's slow first
-return value * (self.entry[to] / self.entry[from]) 
-def update():
-# tries to download new values from internet and 
-# saves them to the cfg file. 
-# otherwise keep all the old values
-old_entries = copy.copy(self.entry)
-try:
-for cur in self.currencies:
-val = internet_convert(1,"GBP",cur)
-self.entry[cur] = val
-self.settings[cur] = val
-self.settings.write()
-except:
-self.entry = old_entries
-def getinfo():
-return self.entry
-# http://www.hackerthreads.org/viewtopic.php?f=8&t=9560
-# http://docs.python.org/library/urllib.html
-def internet_convert(value, from, to):
-   path = '/ucc/convert.cgi?Amount=' + value + '&From=' + from.upper() + '&To=' + to.upper()
+    def __init__(self, settings):
+        self.settings = settings
+        self.entry = {}
+        self.currencies = "GBP USD AUD EUR THB MYR".split()
+        for cur in self.currencies:
+            self.entry[cur] = self.settings[cur]
+        self.update()
+            
+    def convert(value, from, to):
+        # it would be quicker to calc a lookup table for [to]/[from]
+        # but lets see if it's slow first
+        return value * (self.entry[to] / self.entry[from]) 
+    
+    def update():
+        # tries to download new values from internet and 
+        # saves them to the cfg file. 
+        # otherwise keep all the old values
+        old_entries = copy.copy(self.entry)
+        try:
+            for cur in self.currencies:
+                val = internet_convert(1, "GBP", cur)
+                self.entry[cur] = val
+                self.settings[cur] = val
+                self.settings.write()
+        except:
+            self.entry = old_entries
+        
+    def getinfo():
+        return self.entry
+    
+    # http://www.hackerthreads.org/viewtopic.php?f=8&t=9560
+    # http://docs.python.org/library/urllib.html
+    def internet_convert(value, from, to):
+       path = '/ucc/convert.cgi?Amount=' + value + '&From=' + from.upper() + '&To=' + to.upper()
+    
+       sock = socket.socket (socket.AF_INET, socket.SOCK_STREAM)
+       sock.connect(('www.xe.com', 80))
+       sock.send('GET ' + path + ' HTTP/1.0\n\n')
+       response = sock.recv(1024)
+       code = response
+    
+       while response != "":
+          code += response
+          response = sock.recv(1024)
+          
+       try:
+          convert = re.search('([0-9,\,]*)\.([0-9]*)' + ' ' + sys.argv[3].upper(), code)
+          textresult = convert.group(1) + '.' + convert.group(2)
+       except AttributeError:
+          msg(-1)
+       finally:
+          sock.close()
+       
+        return float(textresult)
 
-   sock = socket.socket ( socket.AF_INET, socket.SOCK_STREAM )
-   sock.connect( ( 'www.xe.com', 80 ) )
-   sock.send('GET ' + path + ' HTTP/1.0\n\n')
-   response = sock.recv(1024)
-   code = response
-
-   while response != "":
-      code += response
-      response = sock.recv(1024)
-      
-   try:
-      convert = re.search('([0-9,\,]*)\.([0-9]*)' + ' ' + sys.argv[3].upper(), code )
-      textresult = convert.group(1) + '.' + convert.group(2)
-   except AttributeError:
-      msg(-1)
-   finally:
-      sock.close()
-   
-    return float(textresult)
 -------------------------------------------------------------------------------
 
 class Calendar():

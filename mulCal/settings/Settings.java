@@ -13,12 +13,12 @@ public class Settings {
 	public Settings() {
 		this.configFile = new Properties();
 		this.configFile.put("vat", "17.5");
-		this.configFile.put("GBP", "1.0");
+		this.configFile.put("GBP", "1.00");
 		this.configFile.put("USD", "1.60");
 		this.configFile.put("AUD", "1.60");
 		this.configFile.put("EUR", "1.18");
 		this.configFile.put("THB", "49.55");
-		this.configFile.put("MYR", "4.9");
+		this.configFile.put("MYR", "4.90");
 	}
 	
 	public void Load(String fileName) throws IOException {
