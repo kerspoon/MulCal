@@ -16,6 +16,8 @@ import mulCal.main.Main;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class window {
 
@@ -72,6 +74,15 @@ public class window {
 				bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		        
 				txtCalculate = new JTextField();
+				txtCalculate.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyPressed(KeyEvent evt) {
+				        int key = evt.getKeyCode();
+				        if (key == KeyEvent.VK_ENTER)
+				          goCalcluate();
+					}
+
+				});
 				{
 					txtCalculate.setColumns(40);
 				}
@@ -81,15 +92,7 @@ public class window {
 			        btnCalculate.addMouseListener(new MouseAdapter() {
 			        	@Override
 			        	public void mouseClicked(MouseEvent e) {
-			        		String equationString = txtCalculate.getText(); 
-							try {
-								main.equation(equationString);
-								tblmdlHistory.newRow();
-							} catch (Exception e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-								throw new RuntimeException("bad equation");
-							}
+			        		goCalcluate();
 			        	}
 			        });
 		        }
@@ -104,6 +107,17 @@ public class window {
         frmMulCal.setContentPane(newContentPane);
         frmMulCal.pack();
         frmMulCal.setVisible(true);
+	}
+
+	private void goCalcluate() {
+		String equationString = txtCalculate.getText(); 
+		try {
+			main.equation(equationString);
+			tblmdlHistory.newRow();
+			txtCalculate.setText(""); 
+		} catch (Exception e1) {
+			throw new RuntimeException("bad equation");
+		}
 	}
 	
 	/**

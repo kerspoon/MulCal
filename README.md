@@ -39,6 +39,7 @@ Current Progress
 ----
 
 Version one is done. The command line calculator works - there are some known annoyances (see github:issues) but version one is complete.
+Version two just needs testing on other machines.
 
 Requirements
 ----
