@@ -101,10 +101,15 @@ public class CurrencyTest {
     	System.out.format("MYR %s\n", currency.get("MYR").toPlainString());
 	}
 
+	/**
+	 * Test method for {@link mulCal.currency.Currency#internetTestConvert(BigDecimal, String, String)}.
+	 * @throws Exception 
+	 */
 	@Test
 	public void testOfflineUpdate() throws Exception {
-		String res = Currency.internetTestConvert(new BigDecimal("9754.00"), "CAD", "AED").toPlainString();
-    	System.out.format("9754.00 CAD = %s AED\n", res);
+		assertEquals(
+				Currency.internetTestConvert(new BigDecimal("9754.00"), "CAD", "AED"), 
+				new BigDecimal("36509.79"));
 	}
 	
 	

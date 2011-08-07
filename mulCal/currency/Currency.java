@@ -25,11 +25,15 @@ public class Currency {
 	private Hashtable<String, BigDecimal> entry;
 	private String[] currencies = {"GBP", "USD", "AUD", "EUR", "THB", "MYR"};
         
-	public Currency(Settings settings) throws KeyException {
+	public Currency(Settings settings) {
 		this.settings = settings;
 		this.entry = new Hashtable<String, BigDecimal>();
 		for (String currency : this.currencies) {
-			this.entry.put(currency, new BigDecimal(this.settings.Get(currency)));
+			try {
+				this.entry.put(currency, new BigDecimal(this.settings.Get(currency)));
+			} catch (KeyException e) {
+				throw new RuntimeException("Programmer error: missing currency " + currency);
+			}
 		}
 	}
 	
@@ -89,9 +93,6 @@ public class Currency {
 
 		Elements src = doc.select("tr.CnvrsnTxt > td");
 		assert src.size() == 3 : "Error Parsing Page";
-		
-    	System.out.println(src.size());
-    	System.out.println(src.get(2).text());
     	
 		// converts "1,000.00 USD" -> "1000.00" -> BigDecimal
 		String tmp = src.get(2).text().replaceAll(",", "");
@@ -111,9 +112,6 @@ public class Currency {
 
 		Elements src = doc.select("tr.CnvrsnTxt > td");
 		assert src.size() == 3 : "Error Parsing Page";
-		
-    	System.out.println(src.size());
-    	System.out.println(src.get(2).text());
     	
 		// converts "1,000.00 USD" -> "1000.00" -> BigDecimal
 		String tmp = src.get(2).text().replaceAll(",", "");

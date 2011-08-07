@@ -12,11 +12,13 @@
     </manifest>
     <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
         <javaElement handleIdentifier="=MulCal/&lt;lib.au.com.bytecode.opencsv"/>
-        <javaElement handleIdentifier="=MulCal/&lt;mulCal.util"/>
-        <javaElement handleIdentifier="=MulCal/&lt;mulCal.main"/>
         <javaElement handleIdentifier="=MulCal/&lt;mulCal.history"/>
+        <javaElement handleIdentifier="=MulCal/&lt;mulCal.main"/>
+        <javaElement handleIdentifier="=MulCal/&lt;mulCal.util"/>
         <javaElement handleIdentifier="=MulCal/&lt;lib.au.com.bytecode.opencsv.bean"/>
         <javaElement handleIdentifier="=MulCal/&lt;mulCal.equationParser"/>
+        <javaElement handleIdentifier="=MulCal/&lt;mulCal.currency"/>
         <javaElement handleIdentifier="=MulCal/&lt;mulCal.settings"/>
+        <javaElement handleIdentifier="=MulCal/&lt;lib"/>
     </selectedElements>
 </jardesc>

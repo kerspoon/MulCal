@@ -2,7 +2,6 @@ package mulCal.main;
 
 import static mulCal.equationParser.PostfixEval.eval;
 import static mulCal.equationParser.Tokenize.toTokens;
-import static mulCal.equationParser.EvalSpecial.evalSpecial;
 import static mulCal.equationParser.InfixToRPN.toRPN;
 
 import java.io.IOException;
@@ -14,15 +13,20 @@ import mulCal.equationParser.EvalSpecial;
 import mulCal.equationParser.Tokenize.Token;
 import mulCal.history.History;
 import mulCal.history.History.HistoryItem;
+import mulCal.settings.Settings;
 import mulCal.util.KeyException;
 
 public class Main {
 
 	public History history;
+	private EvalSpecial evalSpecial;
 	private String lastId;
+	private Settings settings;
 	
 	public Main() {
 		history = new History();
+		settings = new Settings();
+		evalSpecial = new EvalSpecial(settings);
 	}
 	
 	public boolean save(String val) {
@@ -48,7 +52,7 @@ public class Main {
 	}
 	
 	public BigDecimal equation(String eqn) throws Exception {
-		List<Token> basicResult = evalSpecial(toTokens(eqn), history, EvalSpecial.constants);
+		List<Token> basicResult = evalSpecial.eval(toTokens(eqn), history);
 		BigDecimal result = eval(toRPN(basicResult));
 		this.lastId = history.Add(eqn, result);
 		return result;

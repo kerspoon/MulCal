@@ -2,13 +2,12 @@ package mulCal.equationParser;
 
 import static junit.framework.Assert.assertEquals;
 import static mulCal.equationParser.Tokenize.toTokens;
-import static mulCal.equationParser.EvalSpecial.evalSpecial;
-
 import java.math.BigDecimal;
 import java.util.List;
 
 import mulCal.equationParser.Tokenize.Token;
 import mulCal.history.History;
+import mulCal.settings.Settings;
 import mulCal.util.KeyException;
 
 import org.junit.Test;
@@ -17,6 +16,8 @@ public class EvalSpecialTest {
 
 	@Test
 	public void testEvalSpecial() throws Exception  {
+		Settings settings = new Settings();
+		EvalSpecial evalSpecial = new EvalSpecial(settings);
 		
 		// create history
 		History history = new History();
@@ -27,7 +28,7 @@ public class EvalSpecialTest {
 		List<Token> tokens = toTokens("1+2");
 		
 		// eval
-		List<Token> result = evalSpecial(tokens, history, EvalSpecial.constants);
+		List<Token> result = evalSpecial.eval(tokens, history);
 
 		assertEquals(result.size(), 3);
 		assertEquals(result.get(0).text, "1");
@@ -40,6 +41,8 @@ public class EvalSpecialTest {
 
 	@Test
 	public void testEvalSpecialConstants() throws Exception {
+		Settings settings = new Settings();
+		EvalSpecial evalSpecial = new EvalSpecial(settings);
 		
 		// create history
 		History history = new History();
@@ -48,7 +51,7 @@ public class EvalSpecialTest {
 		List<Token> tokens = toTokens("1+PI");
 		
 		// eval
-		List<Token> result = evalSpecial(tokens, history, EvalSpecial.constants);
+		List<Token> result = evalSpecial.eval(tokens, history);
 
 		assertEquals(result.size(), 3);
 		assertEquals(result.get(0).text, "1");
@@ -62,6 +65,8 @@ public class EvalSpecialTest {
 	
 	@Test
 	public void testEvalSpecialHistory() throws Exception {
+		Settings settings = new Settings();
+		EvalSpecial evalSpecial = new EvalSpecial(settings);
 		
 		// create history
 		History history = new History();
@@ -72,7 +77,7 @@ public class EvalSpecialTest {
 		List<Token> tokens = toTokens("A+B");
 		
 		// eval
-		List<Token> result = evalSpecial(tokens, history, EvalSpecial.constants);
+		List<Token> result = evalSpecial.eval(tokens, history);
 
 		assertEquals(result.size(), 3);
 		assertEquals(result.get(0).text, "2");
@@ -85,6 +90,8 @@ public class EvalSpecialTest {
 	
 	@Test(expected=KeyException.class)
 	public void testEvalSpecialFail() throws Exception {
+		Settings settings = new Settings();
+		EvalSpecial evalSpecial = new EvalSpecial(settings);
 		
 		// create history
 		History history = new History();
@@ -95,6 +102,25 @@ public class EvalSpecialTest {
 		List<Token> tokens = toTokens("A+C");
 		
 		// eval
-		evalSpecial(tokens, history, EvalSpecial.constants);
+		evalSpecial.eval(tokens, history);
+	}
+	
+	@Test
+	public void testCurrency() throws Exception {
+		Settings settings = new Settings();
+		EvalSpecial evalSpecial = new EvalSpecial(settings);
+
+		// create history
+		History history = new History();
+		
+		// create token list
+		List<Token> tokens = toTokens("[1.0 GBP MYR]");
+		
+		// eval
+		List<Token> result = evalSpecial.eval(tokens, history);
+
+		assertEquals(result.size(), 1);
+		assertEquals(result.get(0).text, "4.90");
+		assertEquals(result.get(0).type, Tokenize.TokenType.NUMBER);
 	}
 }
