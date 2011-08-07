@@ -3,6 +3,7 @@
  */
 package mulCal.currency;
 
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Hashtable;
@@ -35,7 +36,14 @@ public class Currency {
 	public BigDecimal convert(BigDecimal value, String from, String to) {
         // it would be quicker to calc a lookup table for [to]/[from]
         // but lets see if it's slow first
-		return value.multiply(get(from).divide(get(to)));
+		try {
+			return value.multiply(get(to).divide(get(from)));
+		} catch (ArithmeticException e) {
+			return value.multiply(get(to).divide(
+					get(from), 
+					20, 
+					BigDecimal.ROUND_HALF_UP));
+		}
 	}
 	
 	public BigDecimal get(String id) {
@@ -47,7 +55,7 @@ public class Currency {
 	 * saves them to the cfg file.
 	 * otherwise keep all the old values
 	 */
-	public void update() { 
+	public void update() throws Exception { 
 		try {
 			Hashtable<String, BigDecimal> newEntry = new Hashtable<String, BigDecimal>();
 			for (String currency : this.currencies) {
@@ -57,7 +65,8 @@ public class Currency {
 				// TODO: save settings here. 
 			}
 		} catch (Exception e) {
-			// do nothing
+			// do nothing, maybe tell people we failed...
+			throw e;
 		}
 	}
 
@@ -75,13 +84,39 @@ public class Currency {
 			fromKey,
 			toKey);
 
-		Document doc = Jsoup.connect(url).get();
-		Elements src = doc.select("td.rate");
-		assert src.size() == 2 : "Error Parsing Page";
+		String userAgent = "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/13.0.782.109 Safari/535.1";
+		Document doc = Jsoup.connect(url).userAgent(userAgent).get();
 
+		Elements src = doc.select("tr.CnvrsnTxt > td");
+		assert src.size() == 3 : "Error Parsing Page";
+		
+    	System.out.println(src.size());
+    	System.out.println(src.get(2).text());
+    	
 		// converts "1,000.00 USD" -> "1000.00" -> BigDecimal
-		String tmp = src.get(1).text().replaceAll(",", "");
+		String tmp = src.get(2).text().replaceAll(",", "");
+		return new BigDecimal(tmp.substring(0, tmp.length()-toKey.toString().length()-1));
+		
+	}
+
+	/**
+	 * currencyConvert connects to xe.com to convert between two currencies
+	 * 
+	 * b = internetConvert(BigDecimal(1000), CurrencyKey.GBP, CurrencyKey.USD)
+	 * @throws IOException 
+	 */
+	static BigDecimal internetTestConvert (BigDecimal amount, String fromKey, String toKey) throws IOException {
+
+		Document doc = Jsoup.parse(new File("currencyTestPage.html"), "utf-8");
+
+		Elements src = doc.select("tr.CnvrsnTxt > td");
+		assert src.size() == 3 : "Error Parsing Page";
+		
+    	System.out.println(src.size());
+    	System.out.println(src.get(2).text());
+    	
+		// converts "1,000.00 USD" -> "1000.00" -> BigDecimal
+		String tmp = src.get(2).text().replaceAll(",", "");
 		return new BigDecimal(tmp.substring(0, tmp.length()-toKey.toString().length()-1));
 	}
-	
 }
