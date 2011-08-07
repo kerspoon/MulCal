@@ -203,6 +203,7 @@ Extensions
 1. make `display-precision = 2` & `eval-precision = 20` in settings and to allow better maths.
 1. package using a launcher so all mac people need is to double click and windows sees an exe.
 1. it may may more sense for comments, save & load to require quoted text.
+1. currency shouldn't require settings. If it is passed a settings file then it should supply the defaults to it.
 
 Classes 
 ----

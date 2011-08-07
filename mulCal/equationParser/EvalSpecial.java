@@ -12,7 +12,6 @@ import mulCal.currency.Currency;
 import mulCal.equationParser.Tokenize.Token;
 import mulCal.equationParser.Tokenize.TokenType;
 import mulCal.history.History;
-import mulCal.settings.Settings;
 import mulCal.util.KeyException;
 
 import static mulCal.equationParser.Tokenize.startWithNumber;
@@ -30,8 +29,8 @@ public class EvalSpecial {
 
 	private Currency currency;
 	
-	public EvalSpecial(Settings settings) {
-		currency = new Currency(settings);
+	public EvalSpecial(Currency currency) {
+		this.currency = currency;
 	}
     
 	public List<Token> eval(List<Token> tokens, History history) throws KeyException {

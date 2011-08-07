@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
 
+import mulCal.currency.Currency;
 import mulCal.equationParser.EvalSpecial;
 import mulCal.equationParser.Tokenize.Token;
 import mulCal.history.History;
@@ -22,11 +23,13 @@ public class Main {
 	private EvalSpecial evalSpecial;
 	private String lastId;
 	private Settings settings;
+	private Currency currency;
 	
 	public Main() {
 		history = new History();
 		settings = new Settings();
-		evalSpecial = new EvalSpecial(settings);
+		currency = new Currency(settings);
+		evalSpecial = new EvalSpecial(currency);
 	}
 	
 	public boolean save(String val) {
@@ -71,9 +74,13 @@ public class Main {
 		}
 	}
 	
-	public void update(String val) {
-		// TODO not implemented
-		throw new RuntimeException();
+	public boolean update(String val) {
+		try {
+			currency.update();
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 	
 	public void from(String val) {

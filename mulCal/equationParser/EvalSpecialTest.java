@@ -5,6 +5,7 @@ import static mulCal.equationParser.Tokenize.toTokens;
 import java.math.BigDecimal;
 import java.util.List;
 
+import mulCal.currency.Currency;
 import mulCal.equationParser.Tokenize.Token;
 import mulCal.history.History;
 import mulCal.settings.Settings;
@@ -17,7 +18,8 @@ public class EvalSpecialTest {
 	@Test
 	public void testEvalSpecial() throws Exception  {
 		Settings settings = new Settings();
-		EvalSpecial evalSpecial = new EvalSpecial(settings);
+		Currency currency = new Currency(settings);
+		EvalSpecial evalSpecial = new EvalSpecial(currency);
 		
 		// create history
 		History history = new History();
@@ -42,7 +44,8 @@ public class EvalSpecialTest {
 	@Test
 	public void testEvalSpecialConstants() throws Exception {
 		Settings settings = new Settings();
-		EvalSpecial evalSpecial = new EvalSpecial(settings);
+		Currency currency = new Currency(settings);
+		EvalSpecial evalSpecial = new EvalSpecial(currency);
 		
 		// create history
 		History history = new History();
@@ -66,7 +69,8 @@ public class EvalSpecialTest {
 	@Test
 	public void testEvalSpecialHistory() throws Exception {
 		Settings settings = new Settings();
-		EvalSpecial evalSpecial = new EvalSpecial(settings);
+		Currency currency = new Currency(settings);
+		EvalSpecial evalSpecial = new EvalSpecial(currency);
 		
 		// create history
 		History history = new History();
@@ -91,7 +95,8 @@ public class EvalSpecialTest {
 	@Test(expected=KeyException.class)
 	public void testEvalSpecialFail() throws Exception {
 		Settings settings = new Settings();
-		EvalSpecial evalSpecial = new EvalSpecial(settings);
+		Currency currency = new Currency(settings);
+		EvalSpecial evalSpecial = new EvalSpecial(currency);
 		
 		// create history
 		History history = new History();
@@ -108,7 +113,8 @@ public class EvalSpecialTest {
 	@Test
 	public void testCurrency() throws Exception {
 		Settings settings = new Settings();
-		EvalSpecial evalSpecial = new EvalSpecial(settings);
+		Currency currency = new Currency(settings);
+		EvalSpecial evalSpecial = new EvalSpecial(currency);
 
 		// create history
 		History history = new History();

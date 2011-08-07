@@ -142,7 +142,11 @@ public class TextInput {
 					}
 	        	}
 	        } else if ("update".startsWith(key)) {
-	        	main.update(val);
+	        	if (main.update(val)) {
+	        		System.out.println("Update OK.");
+	        	} else {
+	        		System.out.println("Update Failed.");
+	        	}
 	        } else if ("from".startsWith(key)) {
 	        	main.from(val);
 	        } else if ("till".startsWith(key)) {

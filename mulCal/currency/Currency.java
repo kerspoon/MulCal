@@ -59,18 +59,12 @@ public class Currency {
 	 * saves them to the cfg file.
 	 * otherwise keep all the old values
 	 */
-	public void update() throws Exception { 
-		try {
-			Hashtable<String, BigDecimal> newEntry = new Hashtable<String, BigDecimal>();
-			for (String currency : this.currencies) {
-				BigDecimal value = internetConvert(new BigDecimal(1), "GBP", currency);
-				newEntry.put(currency, value);
-				settings.Set(currency, value.toPlainString());
-				// TODO: save settings here. 
-			}
-		} catch (Exception e) {
-			// do nothing, maybe tell people we failed...
-			throw e;
+	public void update() throws KeyException, IOException { 
+		for (String currency : this.currencies) {
+			BigDecimal value = internetConvert(new BigDecimal(1), "GBP", currency);
+			entry.put(currency, value);
+			settings.Set(currency, value.toPlainString());
+			// TODO: save settings here. 
 		}
 	}
 
