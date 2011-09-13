@@ -205,6 +205,7 @@ Extensions
 1. package using a launcher so all mac people need is to double click and windows sees an exe.
 1. it may may more sense for comments, save & load to require quoted text.
 1. currency shouldn't require settings. If it is passed a settings file then it should supply the defaults to it.
+1. Look into using Joda Time with ObjectLab Kit to do work days properly. 
 
 Classes 
 ----

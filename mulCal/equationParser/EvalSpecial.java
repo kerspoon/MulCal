@@ -57,7 +57,6 @@ public class EvalSpecial {
 	
 
 	private Token evalSpecialForm(Token tok, List<Token> tokens, History history) throws KeyException {
-		// TODO: implement when we have specials (calendar or currency)
 		
 		// it comes in two forms:
 		//   [15 USD YEN] 

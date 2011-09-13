@@ -161,18 +161,22 @@ class Currency:
 class Calendar():
 
 # http://www.daniweb.com/code/snippet216493.html
+
 def __init__(self):
 self.from = None
 self.till = None
 self.selected = self.from
+
 def set_from(date):
 self.selected = self.from
 self.selected = date.strptime(date, "%y/%m/%d")
 assert(self.selected == self.from)
+
 def set_till(date):
 self.selected = self.till
 self.selected = date.strptime(date, "%y/%m/%d")
 assert(self.selected == self.till)
+
 def set_till(span, magnitude):
 # todo: this is going to need testing
 # this also uses normalised values for months and years
