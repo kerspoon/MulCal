@@ -3,7 +3,6 @@
  */
 package mulCal.calendar;
 
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
@@ -53,7 +52,7 @@ public class Calendar {
 	//  This method returns the number of days, weeks, months, etc.  
 	//  between the two dates.  In other words it returns the result of  
 	//  subtracting two dates as the number of days, weeks, months, etc.  
-	long getDateDiff( int calUnit ) {  
+	public long getDateDiff( int calUnit ) {  
 		// make sure d1 < d2, else swap them  
 		if( fromDate.after(toDate) ) {    
 			GregorianCalendar temp = fromDate;
