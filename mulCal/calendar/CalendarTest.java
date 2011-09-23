@@ -19,7 +19,7 @@ public class CalendarTest {
 	 * Test method for {@link mulCal.calendar.Calendar#getDateDiff(int)}.
 	 */
 	@Test
-	public void testDiffDay() {
+	public void testDateDiffDay() {
 		
 		Calendar cal = new Calendar();
 		cal.setFromDate(new GregorianCalendar(2000, 1, 1, 1, 1, 1));
@@ -31,7 +31,7 @@ public class CalendarTest {
 	 * Test method for {@link mulCal.calendar.Calendar#getDateDiff(int)}.
 	 */
 	@Test
-	public void testGetDateDay2() {
+	public void testDateDiffDay2() {
 		
 		Calendar cal = new Calendar();
 		cal.setFromDate(new GregorianCalendar(2000, 1, 31, 1, 1, 1));
@@ -43,7 +43,7 @@ public class CalendarTest {
 	 * Test method for {@link mulCal.calendar.Calendar#getDateDiff(int)}.
 	 */
 	@Test
-	public void testGetDateMonth() {
+	public void testDateDiffMonth() {
 		
 		Calendar cal = new Calendar();
 		cal.setFromDate(new GregorianCalendar(2000, 1, 1, 1, 1, 1));
@@ -55,11 +55,24 @@ public class CalendarTest {
 	 * Test method for {@link mulCal.calendar.Calendar#getDateDiff(int)}.
 	 */
 	@Test
-	public void testGetDateMonth2() {
+	public void testDateDiffMonth2() {
 		
 		Calendar cal = new Calendar();
 		cal.setFromDate(new GregorianCalendar(2000, 1, 1, 1, 1, 1));
 		cal.setToDate(new GregorianCalendar(2001, 4, 1, 1, 1, 1));
 		assertEquals(cal.getDateDiff(java.util.Calendar.MONTH),15);
+	}
+	
+	/**
+	 * Test method for {@link mulCal.calendar.Calendar#setFromDateString(String)}.
+	 * @throws Exception 
+	 */
+	@Test
+	public void testSetString() throws Exception {
+		Calendar cal = new Calendar();
+		String fromString = "2000/06/29";
+		cal.setFromDateString(fromString);
+		String s = String.format("%1$tY/%1$tm/%1$te", cal.getFromDate());
+		assertEquals(s,fromString);
 	}
 }

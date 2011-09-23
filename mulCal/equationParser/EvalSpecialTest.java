@@ -120,7 +120,7 @@ public class EvalSpecialTest {
 		History history = new History();
 		
 		// create token list
-		List<Token> tokens = toTokens("[1.0 GBP MYR]");
+		List<Token> tokens = toTokens("[m 1.0 GBP MYR]");
 		
 		// eval
 		List<Token> result = evalSpecial.eval(tokens, history);
@@ -128,5 +128,90 @@ public class EvalSpecialTest {
 		assertEquals(result.size(), 1);
 		assertEquals(result.get(0).text, "4.90");
 		assertEquals(result.get(0).type, Tokenize.TokenType.NUMBER);
+	}
+	
+	@Test
+	public void testCalendar() throws Exception {
+		Settings settings = new Settings();
+		Currency currency = new Currency(settings);
+		EvalSpecial evalSpecial = new EvalSpecial(currency);
+
+		// create history
+		History history = new History();
+		
+		// create token list
+		List<Token> tokens = toTokens("[d weeks 2000/1/1 2000/1/15]");
+		
+		// eval
+		List<Token> result = evalSpecial.eval(tokens, history);
+
+		assertEquals(result.size(), 1);
+		assertEquals(result.get(0).text, "2");
+		assertEquals(result.get(0).type, Tokenize.TokenType.NUMBER);
+	}
+	
+	@Test
+	public void testCalendar2() throws Exception {
+		Settings settings = new Settings();
+		Currency currency = new Currency(settings);
+		EvalSpecial evalSpecial = new EvalSpecial(currency);
+
+		// create history
+		History history = new History();
+		
+		// create token list
+		List<Token> tokens = toTokens("[d days 2000/1/1 2000/1/15]");
+		
+		// eval
+		List<Token> result = evalSpecial.eval(tokens, history);
+
+		assertEquals(result.size(), 1);
+		assertEquals(result.get(0).text, "14");
+		assertEquals(result.get(0).type, Tokenize.TokenType.NUMBER);
+	}
+	
+	public void helperCalendar(String input, String expectedAnswer) throws Exception {
+		
+		Settings settings = new Settings();
+		Currency currency = new Currency(settings);
+		EvalSpecial evalSpecial = new EvalSpecial(currency);
+
+		// create history
+		History history = new History();
+		
+		// create token list
+		List<Token> tokens = toTokens(input);
+		
+		// eval
+		List<Token> result = evalSpecial.eval(tokens, history);
+
+		assertEquals(result.size(), 1);
+		assertEquals(result.get(0).text, expectedAnswer);
+		assertEquals(result.get(0).type, Tokenize.TokenType.NUMBER);
+	}
+	
+	@Test
+	public void testCalendarLots() throws Exception {
+		helperCalendar("[d days 2000/1/1 2000/1/1]","0");
+		helperCalendar("[d days 2000/1/1 2000/1/2]","1");
+		helperCalendar("[d days 2000/1/1 2000/2/1]","31");
+		helperCalendar("[d days 2001/1/1 2002/1/1]","365");
+		
+		helperCalendar("[d weeks 2001/1/1 2002/1/1]","52");
+		helperCalendar("[d weeks 2000/1/1 2000/1/1]","0");
+		helperCalendar("[d weeks 2000/1/1 2000/1/7]","0");
+		helperCalendar("[d weeks 2000/1/1 2000/1/8]","1");
+		helperCalendar("[d weeks 2000/1/1 2000/2/1]","4");
+		
+		helperCalendar("[d months 2001/1/1 2002/1/1]","12");
+		helperCalendar("[d months 2000/1/1 2000/1/1]","0");
+		helperCalendar("[d months 2000/1/1 2000/1/31]","0");
+		helperCalendar("[d months 2000/1/1 2000/2/1]","1");
+		helperCalendar("[d months 2000/1/1 2010/1/1]","120");
+		
+		helperCalendar("[d years 2000/1/1 2000/1/1]","0");
+		helperCalendar("[d years 2000/1/1 2000/12/31]","0");
+		helperCalendar("[d years 2000/1/1 2001/1/1]","1");
+		helperCalendar("[d years 2000/1/1 2010/1/1]","10");
 	}
 }

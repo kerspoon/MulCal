@@ -3,6 +3,8 @@
  */
 package mulCal.calendar;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 
 /**
@@ -47,6 +49,24 @@ public class Calendar {
 		this.toDate = toDate;
 	}
 
+	/**
+	 * @param fromDate the fromDate to set as "yyyy/MM/dd"
+	 * @throws ParseException 
+	 */
+	public void setFromDateString(String fromString) throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		this.fromDate.setTime(sdf.parse(fromString));
+	}
+
+	/**
+	 * @param toDate the toDate to set as "yyyy/MM/dd"
+	 * @throws ParseException 
+	 */
+	public void setToDateString(String toString) throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		this.toDate.setTime(sdf.parse(toString));
+	}
+	
 	// Use one of the constants from Calendar, e.g. DATE, WEEK_OF_YEAR,  
 	//  or MONTH, as the calUnit variable.  Supply two Date objects.  
 	//  This method returns the number of days, weeks, months, etc.  
