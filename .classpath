@@ -9,5 +9,7 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/MulCal/lib/jsoup-1.6.1-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/cobra.jar"/>
+	<classpathentry kind="lib" path="lib/js.jar"/>
 	<classpathentry kind="output" path=""/>
 </classpath>
