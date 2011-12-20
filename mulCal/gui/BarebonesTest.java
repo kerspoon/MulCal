@@ -1,3 +1,5 @@
+package mulCal.gui;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -22,12 +24,18 @@ public class BarebonesTest {
 		// Initialize logging so only Cobra warnings are seen.
 		Logger.getLogger("org.lobobrowser")
 			.setLevel(Level.WARNING);
-
+		
+		/*
 		// Open a connection on the URL we want to render first.
 		String uri = "http://lobobrowser.org/browser/home.jsp";
 		URL url = new URL(uri);
 		URLConnection connection = url.openConnection();
 		InputStream in = connection.getInputStream();
+		*/
+
+	    // Open an input stream
+		String uri = "assets/index.html";
+		InputStream in = new FileInputStream (uri);
 
 		// A Reader should be created with the correct charset,
 		// which may be obtained from the Content-Type header
