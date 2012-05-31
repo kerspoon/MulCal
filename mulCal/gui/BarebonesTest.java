@@ -44,7 +44,7 @@ public class BarebonesTest {
 
 		// InputSourceImpl constructor with URI recommended
 		// so the renderer can resolve page component URLs.
-		InputSource is = new InputSourceImpl(reader, uri);
+		InputSource is = new InputSourceImpl(reader, "file://" + uri);
 		HtmlPanel htmlPanel = new HtmlPanel();
 		UserAgentContext ucontext = new LocalUserAgentContext();
 		HtmlRendererContext rendererContext = 
@@ -56,7 +56,7 @@ public class BarebonesTest {
 		// We do this here to illustrate the 
 		// feature, but is generally not
 		// recommended for performance reasons.
-		htmlPanel.setPreferredWidth(800);
+		htmlPanel.setPreferredSize(new Dimension(800, 600));
 		
 		// Note: This example does not perform incremental
 		// rendering while loading the initial document.
